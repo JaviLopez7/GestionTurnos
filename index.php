@@ -19,15 +19,15 @@
         </div>
             
         <div>
-             <a href="turnosPaciente.html">INICIAR SESIÓN</a>
+             <a href="IGU/turnosPaciente.html">INICIAR SESIÓN</a>
         </div>
             
         <div>
-            <a href="olvidasteContrasenia.html">¿Olvidaste tu contraseña?</a>
+            <a href="IGU/olvidasteContrasenia.html">¿Olvidaste tu contraseña?</a>
         </div>
             
         <div>
-            ¿No tienes cuenta? <a href="registrarUsuario.html">Regístrate</a>
+            ¿No tienes cuenta? <a href="IGU/registrarPaciente.php">Regístrate</a>
         </div>
     </form>
 </body>
