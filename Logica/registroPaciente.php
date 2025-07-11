@@ -1,5 +1,5 @@
 <?php
-require_once '../Persistencia/conexionBD.php'; // Ajustá la ruta según tu estructura
+require_once '../Persistencia/conexionBD.php';
 $conn = ConexionBD::conectar();
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
@@ -30,6 +30,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    // Validar afiliación
+    $validacion_stmt = $conn->prepare("SELECT 1 FROM afiliados WHERE numero_documento = ? AND numero_afiliado = ? AND estado = 'activo'");
+    $validacion_stmt->bind_param("ss", $numero_documento, $numero_afiliado);
+    $validacion_stmt->execute();
+    $validacion_stmt->store_result();
+
+    if ($validacion_stmt->num_rows === 0) {
+        // No está afiliado o no está activo
+        echo "<script>alert('❌ No estás registrado como afiliado activo. No puedes realizar el registro.'); window.history.back();</script>";
+        $validacion_stmt->close();
+        $conn->close();
+        exit;
+    }
+    $validacion_stmt->close();
+
+    // Si pasa la validación, insertar paciente
     $stmt = $conn->prepare("INSERT INTO pacientes 
         (nombre, apellido, tipo_documento, numero_documento, img_dni, genero, fecha_nacimiento, domicilio, numero_contacto, cobertura_salud, numero_afiliado, email, password_hash) 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
@@ -52,22 +68,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     );
 
     try {
-    $stmt->execute();
-    echo "<script>alert('✅ Registro exitoso.'); window.location.href = '../index.php';</script>";
-} catch (mysqli_sql_exception $e) {
-    $errorMsg = $e->getMessage();
+        $stmt->execute();
+        echo "<script>alert('✅ Registro exitoso.'); window.location.href = '../index.php';</script>";
+    } catch (mysqli_sql_exception $e) {
+        $errorMsg = $e->getMessage();
 
-    if (strpos($errorMsg, 'numero_documento') !== false) {
-        echo "<script>alert('❌ Error: el número de documento ya está registrado.'); window.history.back();</script>";
-    } elseif (strpos($errorMsg, 'email') !== false) {
-        echo "<script>alert('❌ Error: el correo electrónico ya está registrado.'); window.history.back();</script>";
-    } else {
-        echo "<script>alert('❌ Error al registrar: " . addslashes($errorMsg) . "'); window.history.back();</script>";
+        if (strpos($errorMsg, 'numero_documento') !== false) {
+            echo "<script>alert('❌ Error: el número de documento ya está registrado.'); window.history.back();</script>";
+        } elseif (strpos($errorMsg, 'email') !== false) {
+            echo "<script>alert('❌ Error: el correo electrónico ya está registrado.'); window.history.back();</script>";
+        } else {
+            echo "<script>alert('❌ Error al registrar: " . addslashes($errorMsg) . "'); window.history.back();</script>";
+        }
     }
-}
 
-$stmt->close();
-$conn->close();
-exit;
+    $stmt->close();
+    $conn->close();
+    exit;
 }
 ?>

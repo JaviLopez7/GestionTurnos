@@ -7,25 +7,25 @@
 </head>
 <body>
     <h1>INICIAR SESIÓN</h1>
-    <form>
+    <form action="Logica/iniciarSesion.php" method="POST">
         <div>
             <label for="email">Correo Electrónico:</label>
             <input type="text" id="email" name="email" required>
         </div>
-            
+        
         <div>
-            <label for="password">Contraseña:</label>
-            <input type="password" id="clave" name="clave" required>
+            <label for="clave">Contraseña:</label>
+            <input type="password" id="password" name="password" required>
         </div>
-            
+        
         <div>
-             <a href="IGU/turnosPaciente.html">INICIAR SESIÓN</a>
+            <button type="submit">INICIAR SESIÓN</button>
         </div>
-            
+        
         <div>
             <a href="IGU/olvidasteContrasenia.html">¿Olvidaste tu contraseña?</a>
         </div>
-            
+        
         <div>
             ¿No tienes cuenta? <a href="IGU/registrarPaciente.php">Regístrate</a>
         </div>

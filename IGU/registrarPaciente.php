@@ -69,7 +69,7 @@
 
         <div>
             <button type="submit">Registrarse</button>
-            ¿Ya tienes cuenta? <a href="index.html">Inicia sesión</a>
+            ¿Ya tienes cuenta? <a href="index.php">Inicia sesión</a>
         </div>
   </form>
 </body>
