@@ -22,3 +22,16 @@ CREATE TABLE pacientes (
     fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE afiliados (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    numero_documento VARCHAR(20) NOT NULL UNIQUE,
+    numero_afiliado VARCHAR(30) NOT NULL,
+    cobertura_salud ENUM('UOM', 'OSDE', 'Swiss Medical', 'Galeno', 'Otra') NOT NULL,
+    estado ENUM('activo', 'inactivo') DEFAULT 'activo'
+);
+
+INSERT INTO afiliados (numero_documento, numero_afiliado, cobertura_salud, estado)
+VALUES 
+('12345678', 'UOM-001122', 'UOM', 'activo'),
+('87654321', 'OSDE-998877', 'OSDE', 'activo'),
+('11223344', 'GAL-556677', 'Galeno', 'inactivo'); -- No debería poder registrarse
