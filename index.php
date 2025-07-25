@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>INICIAR SESIÓN</h1>
-    <form action="Logica/iniciarSesion.php" method="POST">
+    <form action="Logica/General/iniciarSesion.php" method="POST">
         <div>
             <label for="email">Correo Electrónico:</label>
             <input type="text" id="email" name="email" required>
@@ -23,11 +23,11 @@
         </div>
         
         <div>
-            <a href="IGU/olvidasteContrasenia.html">¿Olvidaste tu contraseña?</a>
+            <a href="interfaces/olvidasteContrasenia.html">¿Olvidaste tu contraseña?</a>
         </div>
         
         <div>
-            ¿No tienes cuenta? <a href="IGU/registrarPaciente.php">Regístrate</a>
+            ¿No tienes cuenta? <a href="interfaces/Paciente/registrarPaciente.php">Regístrate</a>
         </div>
     </form>
 </body>
