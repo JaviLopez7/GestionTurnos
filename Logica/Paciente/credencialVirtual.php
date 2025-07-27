@@ -1,8 +1,5 @@
 <?php
 
-// Para depurar los parámetros GET
-var_dump($_GET);
-
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -82,19 +79,14 @@ function mostrarDatosPaciente($datos) {
 }
 
 function descargarCredencial($conn, $token) {
-    // Mostrar que hemos entrado en la función
-    echo "Entrando en la función descargarCredencial<br>";
-
     // Obtener los datos del paciente
     $datos = obtenerDatosPacientePorToken($conn, $token);
     if (!$datos) {
         die("❌ No se encontraron los datos del paciente.");
     }
 
-    echo "Datos del paciente obtenidos: " . print_r($datos, true) . "<br>";
-
     // Crear el PDF
-    require_once('../../librerias/fpdf/fpdf.php'); // Incluir FPDF si no está incluido ya
+    require_once('../../librerias/fpdf/fpdf.php');
     $pdf = new FPDF();
     $pdf->AddPage();
     $pdf->SetFont('Arial', 'B', 16);
@@ -111,26 +103,13 @@ function descargarCredencial($conn, $token) {
     $pdf->Cell(0, 10, "Estado: {$datos['estado']}", 0, 1);
     $pdf->Ln(10);
 
-    // Generar el QR para el PDF
-    $qr_data = "http://192.168.1.7/interfaces/Paciente/verCredencial.php?token=$token";
-    $qr_temp_path = sys_get_temp_dir() . "/qr_$token.png";
-    
-    // Verificar si se genera correctamente el archivo QR
-    echo "Generando QR en: $qr_temp_path<br>";
-    QRcode::png($qr_data, $qr_temp_path, QR_ECLEVEL_L, 3);
-    
-    // Comprobar si el archivo QR fue generado
-    if (!file_exists($qr_temp_path)) {
-        die("❌ El archivo QR no se pudo generar.");
-    }
-
-    // Añadir el QR al PDF
-    $pdf->Image($qr_temp_path, 80, $pdf->GetY(), 50);
-    unlink($qr_temp_path); // Limpiar el archivo temporal
-
     // Salida del PDF
     $pdf->Output('D', 'credencial_virtual.pdf');
-    exit; // Detener el script
+    exit;
+}
+
+if (isset($_GET['descargar']) && $_GET['descargar'] == '1' && isset($_GET['token'])) {
+    descargarCredencial($conn, $_GET['token']);
 }
 
 ?>
