@@ -12,7 +12,7 @@
 <nav>
     <ul>
         <li><a href="../../index.php">Inicio</a></li>
-        <li><a href="#">Mis Turnos</a></li>
+        <li><a href="/interfaces/Paciente/Gestion/misTurnos.php">Mis Turnos</a></li>
         <li><a href="verCredencial.php">Ver credencial</a></li>
         <li>
             <input type="text" placeholder="Buscar..."/>
@@ -26,16 +26,16 @@
 <div>
     <h1>Bienvenido/a al Sistema de turnos</h1>
     <div>
-        <a href="turnoMedico.php">Solicitar turno medico</a>
-        <a href="turnoEstudio.php">Solicitar estudio</a>
-        <button>Ver Mis Turnos</button>
+        <a href="Gestion/Turnos-Medico/turnoMedico.php">Solicitar turno medico</a>
+        <a href="Gestion/Turnos-Estudio/turnoEstudio.php">Solicitar estudio</a>
+       <a href="/interfaces/Paciente/Gestion/misTurnos.php">Ver Mis Turnos</a>
         <button>Cancelar Turno</button>
     </div>
 
     
 </div>
 
-<script src="js/controlInactividad.js"></script>
+
 
 </body>
 </html>
