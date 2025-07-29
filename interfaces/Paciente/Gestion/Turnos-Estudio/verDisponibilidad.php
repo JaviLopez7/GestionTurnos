@@ -46,6 +46,9 @@ function getDisponibilidadDias($conn, $estudioId, $sedeId) {
             JOIN recursos r ON a.recurso_id = r.id
             WHERE a.estudio_id = ? AND r.sede_id = ? AND a.fecha = ? AND a.disponible = TRUE
         ";
+
+        var_dump($sql, $estudioId, $sedeId, $date); // para ver la consulta armada
+
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("iis", $estudioId, $sedeId, $date);
         $stmt->execute();

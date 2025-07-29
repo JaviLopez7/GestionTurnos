@@ -83,6 +83,9 @@ if (!$stmt3->execute()) {
     die("Error al guardar el turno.");
 }
 
+$turnoId = $conn->insert_id; // <- ID del turno recién creado
+
+
 // 4. Marcar turno como ocupado en agenda
 $sqlUpdateAgenda = "UPDATE agenda SET disponible = FALSE WHERE id = ?";
 $stmt4 = $conn->prepare($sqlUpdateAgenda);
@@ -91,4 +94,10 @@ $stmt4->execute();
 
 // 5. Confirmación (puedes redirigir o mostrar mensaje)
 echo "✅ Turno confirmado correctamente. Se envió un email con los detalles."; // TODO: agregar envío de mail
+// Llamar al envío del correo de confirmación
+require_once '../../General/envioNotificacion.php';
+
+
+enviarNotificacionTurno($conn, $turnoId); // Esta función la definimos ahora
+
 ?>
